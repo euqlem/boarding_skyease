@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkyEase Boarding Pass</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky: #1E90FF;
+      --sky-dark: #1A3A5C;
+      --gold: #FFD43B;
+      --white: #FFFFFF;
+      --bg: #0A1628;
+      --card: #0F1F38;
+      --border: rgba(30,144,255,0.25);
+      --muted: #7A9AB8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      font-family: 'Barlow', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px;
+      background-image:
+        radial-gradient(ellipse at 20% 0%, rgba(30,144,255,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 100%, rgba(255,212,59,0.06) 0%, transparent 50%);
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 36px;
+      animation: fadeDown 0.6s ease both;
+    }
+    .page-header .logo {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+    .page-header .logo span { color: var(--sky); }
+    .page-header .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .boarding-pass {
+      width: 100%;
+      max-width: 600px;
+      background: var(--card);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(30,144,255,0.1);
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+
+    .pass-header {
+      background: linear-gradient(135deg, var(--sky-dark) 0%, #0E2A4A 100%);
+      padding: 28px 32px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .pass-header::before {
+      content: '✈';
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 80px;
+      opacity: 0.07;
+      line-height: 1;
+    }
+    .pass-header .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,212,59,0.15);
+      border: 1px solid rgba(255,212,59,0.4);
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .pass-header .booking-num {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 22px;
+      color: var(--white);
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+    }
+    .pass-header .pass-label {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .route-section {
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .route-city {
+      flex: 1;
+      text-align: center;
+    }
+    .route-city .city-code {
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+    .route-city .city-name {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .route-arrow {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .route-arrow .arrow-line {
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--border), var(--sky), var(--border));
+      position: relative;
+    }
+    .route-arrow .arrow-line::after {
+      content: '✈';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      color: var(--sky);
+      background: var(--card);
+      padding: 0 6px;
+    }
+    .route-arrow .flight-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .details-section {
+      padding: 24px 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .detail-item .di-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 4px;
+    }
+    .detail-item .di-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .detail-item .di-value.highlight { color: var(--sky); }
+
+    .passenger-section {
+      padding: 24px 32px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .section-title {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .passenger-name {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .passenger-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .pmeta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .pmeta-item .pm-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .pmeta-item .pm-value {
+      font-size: 13px;
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .baggage-section {
+      padding: 20px 32px;
+      border-bottom: 1px dashed var(--border);
+      display: flex;
+      gap: 20px;
+    }
+    .baggage-item {
+      flex: 1;
+      background: rgba(30,144,255,0.07);
+      border: 1px solid rgba(30,144,255,0.15);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .baggage-icon { font-size: 24px; }
+    .baggage-info .bi-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .baggage-info .bi-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .qr-section {
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .qr-box {
+      flex: 0 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 12px;
+      width: 130px;
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(30,144,255,0.3);
+    }
+    .qr-box img, .qr-box canvas {
+      width: 106px !important;
+      height: 106px !important;
+    }
+    .qr-info { flex: 1; }
+    .qr-info .qi-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .qr-info .qi-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .qr-info .qi-scan {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--sky);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .tear-line {
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      position: relative;
+    }
+    .tear-line::before, .tear-line::after {
+      content: '';
+      width: 24px;
+      height: 24px;
+      background: var(--bg);
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 1px solid rgba(30,144,255,0.1);
+    }
+    .tear-dots {
+      flex: 1;
+      border-top: 2px dashed rgba(30,144,255,0.2);
+      margin: 0 4px;
+    }
+
+    .pass-footer {
+      background: rgba(255,212,59,0.05);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .pass-footer .reminder {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .pass-footer .reminder strong { color: var(--gold); }
+    .print-btn {
+      background: var(--sky);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Barlow', sans-serif;
+      transition: background 0.2s;
+    }
+    .print-btn:hover { background: #1a7de0; }
+
+    .error-state {
+      text-align: center;
+      padding: 60px 32px;
+      color: var(--muted);
+    }
+    .error-state .err-icon { font-size: 48px; margin-bottom: 16px; }
+    .error-state h2 { color: var(--white); margin-bottom: 8px; }
+
+    .loading-state {
+      text-align: center;
+      padding: 60px 32px;
+      color: var(--muted);
+    }
+    .loading-state .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid rgba(30,144,255,0.2);
+      border-top-color: var(--sky);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 500px) {
+      .details-section { grid-template-columns: repeat(2, 1fr); }
+      .route-city .city-code { font-size: 32px; }
+      .route-arrow .arrow-line { width: 50px; }
+      .qr-section { flex-direction: column; text-align: center; }
+      .baggage-section { flex-direction: column; }
+      .pass-header, .route-section, .details-section,
+      .passenger-section, .baggage-section, .qr-section, .pass-footer {
+        padding-left: 20px; padding-right: 20px;
+      }
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .boarding-pass { box-shadow: none; border: 1px solid #ddd; }
+      .print-btn { display: none; }
+      .page-header { color: #333; }
+      :root {
+        --bg: white; --card: white; --white: #111;
+        --sky-dark: #1A3A5C; --muted: #666; --border: #ddd;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="logo">Sky<span>Ease</span> ✈</div>
+    <div class="subtitle">Boarding Pass</div>
+  </div>
+
+  <div class="boarding-pass" id="boardingPass">
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading boarding pass...</p>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    // ============================================================
+    // BOARDING PASS — reads flight data from URL params
+    // Works WITHOUT backend. QR encodes all flight info.
+    // ============================================================
+
+    function getParams() {
+      const p = new URLSearchParams(window.location.search);
+      const result = {};
+      for (const [k, v] of p.entries()) result[k] = v;
+      return result;
+    }
+
+    function loadBoardingPass() {
+      const p = getParams();
+
+      // Support two modes:
+      // 1. Legacy backend mode: ?booking=BK-XXX-P1
+      // 2. New standalone mode: ?from=Manila&to=Cebu&...
+      if (!p.from && !p.booking) {
+        showError('No flight data found.', 'Please scan a valid SkyEase boarding pass QR code.');
+        return;
+      }
+
+      if (p.from) {
+        // Standalone mode — data is in URL params
+        renderFromParams(p);
+      } else {
+        // Legacy mode — try backend, fallback to error
+        fetchFromBackend(p.booking);
+      }
+    }
+
+    function renderFromParams(p) {
+      const baggageMap = {
+        economy:  { cabin: '7 kg', checked: '20 kg' },
+        business: { cabin: '10 kg', checked: '30 kg' },
+        first:    { cabin: '15 kg', checked: '40 kg' }
+      };
+      const cls     = (p.class || 'economy').toLowerCase();
+      const baggage = baggageMap[cls] || baggageMap.economy;
+
+      const statusColor = '#22C55E';
+      const statusLabel = '✅ Confirmed';
+
+      const fromCode = (p.from || '---').substring(0, 3).toUpperCase();
+      const toCode   = (p.to   || '---').substring(0, 3).toUpperCase();
+
+      document.getElementById('boardingPass').innerHTML = `
+        <div class="pass-header">
+          <div class="status-badge" style="border-color:#22C55E44;color:#22C55E;background:#22C55E18;">
+            ${statusLabel}
+          </div>
+          <div class="booking-num">${p.booking || 'SKY-BOARDING'}</div>
+          <div class="pass-label">Booking Reference</div>
+        </div>
+
+        <div class="route-section">
+          <div class="route-city">
+            <div class="city-code">${fromCode}</div>
+            <div class="city-name">${p.from || 'Origin'}</div>
+          </div>
+          <div class="route-arrow">
+            <div class="arrow-line"></div>
+            <div class="flight-label">${p.airline || 'SkyEase'}</div>
+          </div>
+          <div class="route-city">
+            <div class="city-code">${toCode}</div>
+            <div class="city-name">${p.to || 'Destination'}</div>
+          </div>
+        </div>
+
+        <div class="details-section">
+          <div class="detail-item">
+            <div class="di-label">Date</div>
+            <div class="di-value">${p.date || 'N/A'}</div>
+          </div>
+          <div class="detail-item">
+            <div class="di-label">Departure</div>
+            <div class="di-value highlight">${p.time || 'N/A'}</div>
+          </div>
+          <div class="detail-item">
+            <div class="di-label">Class</div>
+            <div class="di-value">${cls.toUpperCase()}</div>
+          </div>
+          <div class="detail-item">
+            <div class="di-label">Seat</div>
+            <div class="di-value highlight">${p.seat || 'N/A'}</div>
+          </div>
+          <div class="detail-item">
+            <div class="di-label">Airline</div>
+            <div class="di-value">${p.airline || 'N/A'}</div>
+          </div>
+          <div class="detail-item">
+            <div class="di-label">Passengers</div>
+            <div class="di-value">${p.pax || 1} pax</div>
+          </div>
+        </div>
+
+        <div class="passenger-section">
+          <div class="section-title">Passenger Information</div>
+          <div class="passenger-name">${p.name || 'Passenger'}</div>
+          <div class="passenger-meta">
+            <div class="pmeta-item">
+              <span class="pm-label">Gender</span>
+              <span class="pm-value">${p.gender ? p.gender.charAt(0).toUpperCase() + p.gender.slice(1) : 'N/A'}</span>
+            </div>
+            <div class="pmeta-item">
+              <span class="pm-label">Date of Birth</span>
+              <span class="pm-value">${p.dob || 'N/A'}</span>
+            </div>
+            <div class="pmeta-item">
+              <span class="pm-label">Meal</span>
+              <span class="pm-value">${p.meal ? p.meal.charAt(0).toUpperCase() + p.meal.slice(1) : 'Standard'}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="baggage-section">
+          <div class="baggage-item">
+            <div class="baggage-icon">🎒</div>
+            <div class="baggage-info">
+              <div class="bi-label">Cabin Baggage</div>
+              <div class="bi-value">${baggage.cabin}</div>
+            </div>
+          </div>
+          <div class="baggage-item">
+            <div class="baggage-icon">🧳</div>
+            <div class="baggage-info">
+              <div class="bi-label">Checked Baggage</div>
+              <div class="bi-value">${baggage.checked}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tear-line"><div class="tear-dots"></div></div>
+
+        <div class="qr-section">
+          <div class="qr-box" id="qrContainer"></div>
+          <div class="qr-info">
+            <div class="qi-title">📱 Boarding Pass QR</div>
+            <div class="qi-desc">
+              Present this QR code at the airport check-in counter and boarding gate.
+            </div>
+            <div class="qi-scan">✅ Scan to verify all flight details</div>
+          </div>
+        </div>
+
+        <div class="pass-footer">
+          <div class="reminder">
+            <strong>⏰ Check-in:</strong> At least 2 hours before departure<br>
+            <strong>🪪 Bring:</strong> Valid government-issued ID<br>
+            <strong>📞 Support:</strong> skyease.airline@gmail.com
+          </div>
+          <button class="print-btn" onclick="window.print()">🖨️ Print Pass</button>
+        </div>
+      `;
+
+      // Generate QR that encodes THIS page's URL (with all data in params)
+      const qrUrl = window.location.href;
+      new QRCode(document.getElementById('qrContainer'), {
+        text: qrUrl,
+        width: 106,
+        height: 106,
+        colorDark: '#1A3A5C',
+        colorLight: '#FFFFFF',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    }
+
+    async function fetchFromBackend(bookingParam) {
+      const BACKEND_URL = 'http://localhost:3000';
+      const bookingNumber = bookingParam.replace(/-P\d+$/, '');
+      const passengerIndex = parseInt((bookingParam.match(/-P(\d+)$/) || [,1])[1]) - 1;
+
+      try {
+        const res  = await fetch(`${BACKEND_URL}/api/bookings/${bookingNumber}`);
+        const data = await res.json();
+        if (!data.success || !data.booking) {
+          showError('Booking not found.', 'This QR code may be invalid or expired.');
+          return;
+        }
+        const booking   = data.booking;
+        const flight    = booking.flightDetails;
+        const passenger = booking.passengers[passengerIndex] || booking.passengers[0];
+        const p = {
+          booking: bookingParam,
+          from:    flight.from,
+          to:      flight.to,
+          date:    flight.date,
+          time:    flight.time,
+          class:   flight.seatClass,
+          seat:    passenger.seat,
+          airline: flight.airline,
+          pax:     flight.totalPassengers || 1,
+          name:    `${passenger.firstName} ${passenger.middleName || ''} ${passenger.lastName}`.trim(),
+          gender:  passenger.gender,
+          dob:     passenger.dateOfBirth || passenger.dob,
+          meal:    passenger.mealPreference
+        };
+        renderFromParams(p);
+      } catch (err) {
+        showError('Cannot connect to server.', 'Please make sure the backend is running.');
+      }
+    }
+
+    function showError(title, desc) {
+      document.getElementById('boardingPass').innerHTML = `
+        <div class="error-state">
+          <div class="err-icon">✈️</div>
+          <h2>${title}</h2>
+          <p>${desc}</p>
+        </div>
+      `;
+    }
+
+    loadBoardingPass();
+  </script>
+</body>
+</html>
