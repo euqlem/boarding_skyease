@@ -7,14 +7,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --sky: #1E90FF;
-      --sky-dark: #1A3A5C;
-      --gold: #FFD43B;
-      --white: #FFFFFF;
-      --bg: #0A1628;
-      --card: #0F1F38;
-      --border: rgba(30,144,255,0.25);
-      --muted: #7A9AB8;
+      --yellow: #FFD700;
+      --yellow-dark: #F5C200;
+      --blue: #1B8EF0;
+      --blue-dark: #1565C0;
+      --bg: #D6EAF8;
+      --card: #FFFFFF;
+      --border: rgba(27,142,240,0.2);
+      --muted: #5B8DB8;
+      --text: #1A3A5C;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,45 +28,59 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding: 40px 20px;
-      background-image:
-        radial-gradient(ellipse at 20% 0%, rgba(30,144,255,0.12) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 100%, rgba(255,212,59,0.06) 0%, transparent 50%);
+      padding: 0 0 40px 0;
     }
 
     .page-header {
+      width: 100%;
+      background: linear-gradient(135deg, var(--yellow) 0%, var(--yellow-dark) 100%);
       text-align: center;
-      margin-bottom: 36px;
+      padding: 32px 20px 40px;
+      margin-bottom: -20px;
       animation: fadeDown 0.6s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::after {
+      content: '✈';
+      position: absolute;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 90px;
+      opacity: 0.1;
     }
     .page-header .logo {
-      font-size: 28px;
+      font-size: 30px;
       font-weight: 900;
-      color: var(--white);
+      color: var(--blue-dark);
       letter-spacing: -0.5px;
     }
-    .page-header .logo span { color: var(--sky); }
+    .page-header .logo span { color: var(--blue); }
     .page-header .subtitle {
       font-size: 13px;
-      color: var(--muted);
+      color: rgba(27,101,192,0.7);
       margin-top: 4px;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       text-transform: uppercase;
+      font-weight: 600;
     }
 
     .boarding-pass {
-      width: 100%;
+      width: calc(100% - 40px);
       max-width: 600px;
       background: var(--card);
       border-radius: 20px;
       border: 1px solid var(--border);
       overflow: hidden;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(30,144,255,0.1);
+      box-shadow: 0 10px 40px rgba(27,142,240,0.15), 0 2px 8px rgba(0,0,0,0.08);
       animation: fadeUp 0.7s ease 0.1s both;
+      position: relative;
+      z-index: 1;
     }
 
     .pass-header {
-      background: linear-gradient(135deg, var(--sky-dark) 0%, #0E2A4A 100%);
+      background: linear-gradient(135deg, var(--yellow) 0%, var(--yellow-dark) 100%);
       padding: 28px 32px 24px;
       position: relative;
       overflow: hidden;
@@ -77,16 +92,16 @@
       top: 50%;
       transform: translateY(-50%);
       font-size: 80px;
-      opacity: 0.07;
+      opacity: 0.1;
       line-height: 1;
     }
     .pass-header .status-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(255,212,59,0.15);
-      border: 1px solid rgba(255,212,59,0.4);
-      color: var(--gold);
+      background: rgba(27,142,240,0.15);
+      border: 1px solid rgba(27,142,240,0.4);
+      color: var(--blue-dark);
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 1.5px;
@@ -98,15 +113,16 @@
     .pass-header .booking-num {
       font-family: 'Share Tech Mono', monospace;
       font-size: 22px;
-      color: var(--white);
+      color: var(--text);
       letter-spacing: 2px;
       margin-bottom: 4px;
     }
     .pass-header .pass-label {
       font-size: 12px;
-      color: var(--muted);
+      color: rgba(27,101,192,0.7);
       letter-spacing: 1px;
       text-transform: uppercase;
+      font-weight: 600;
     }
 
     .route-section {
@@ -115,6 +131,7 @@
       align-items: center;
       gap: 16px;
       border-bottom: 1px dashed var(--border);
+      background: #F0F8FF;
     }
     .route-city {
       flex: 1;
@@ -123,7 +140,7 @@
     .route-city .city-code {
       font-size: 42px;
       font-weight: 900;
-      color: var(--white);
+      color: var(--blue-dark);
       line-height: 1;
       letter-spacing: -1px;
     }
@@ -144,7 +161,7 @@
     .route-arrow .arrow-line {
       width: 80px;
       height: 2px;
-      background: linear-gradient(90deg, var(--border), var(--sky), var(--border));
+      background: linear-gradient(90deg, var(--border), var(--blue), var(--border));
       position: relative;
     }
     .route-arrow .arrow-line::after {
@@ -154,8 +171,8 @@
       left: 50%;
       transform: translate(-50%, -50%);
       font-size: 18px;
-      color: var(--sky);
-      background: var(--card);
+      color: var(--blue);
+      background: #F0F8FF;
       padding: 0 6px;
     }
     .route-arrow .flight-label {
@@ -171,6 +188,7 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       border-bottom: 1px dashed var(--border);
+      background: #FFFFFF;
     }
     .detail-item .di-label {
       font-size: 10px;
@@ -182,13 +200,14 @@
     .detail-item .di-value {
       font-size: 15px;
       font-weight: 700;
-      color: var(--white);
+      color: var(--text);
     }
-    .detail-item .di-value.highlight { color: var(--sky); }
+    .detail-item .di-value.highlight { color: var(--blue); }
 
     .passenger-section {
       padding: 24px 32px;
       border-bottom: 1px dashed var(--border);
+      background: #F0F8FF;
     }
     .section-title {
       font-size: 10px;
@@ -200,7 +219,7 @@
     .passenger-name {
       font-size: 24px;
       font-weight: 700;
-      color: var(--white);
+      color: var(--text);
       margin-bottom: 12px;
     }
     .passenger-meta {
@@ -221,7 +240,7 @@
     }
     .pmeta-item .pm-value {
       font-size: 13px;
-      color: var(--white);
+      color: var(--text);
       font-weight: 600;
     }
 
@@ -230,11 +249,12 @@
       border-bottom: 1px dashed var(--border);
       display: flex;
       gap: 20px;
+      background: #FFFFFF;
     }
     .baggage-item {
       flex: 1;
-      background: rgba(30,144,255,0.07);
-      border: 1px solid rgba(30,144,255,0.15);
+      background: rgba(255,215,0,0.12);
+      border: 1px solid rgba(255,215,0,0.5);
       border-radius: 10px;
       padding: 14px 16px;
       display: flex;
@@ -251,7 +271,7 @@
     .baggage-info .bi-value {
       font-size: 14px;
       font-weight: 700;
-      color: var(--white);
+      color: var(--text);
     }
 
     .qr-section {
@@ -259,6 +279,7 @@
       display: flex;
       align-items: center;
       gap: 28px;
+      background: #F0F8FF;
     }
     .qr-box {
       flex: 0 0 auto;
@@ -270,7 +291,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 20px rgba(30,144,255,0.3);
+      box-shadow: 0 4px 20px rgba(27,142,240,0.2);
+      border: 2px solid rgba(255,215,0,0.5);
     }
     .qr-box img, .qr-box canvas {
       width: 106px !important;
@@ -280,7 +302,7 @@
     .qr-info .qi-title {
       font-size: 13px;
       font-weight: 700;
-      color: var(--white);
+      color: var(--text);
       margin-bottom: 6px;
     }
     .qr-info .qi-desc {
@@ -291,7 +313,7 @@
     .qr-info .qi-scan {
       margin-top: 10px;
       font-size: 11px;
-      color: var(--sky);
+      color: var(--blue);
       font-weight: 600;
       letter-spacing: 0.5px;
     }
@@ -309,16 +331,17 @@
       background: var(--bg);
       border-radius: 50%;
       flex-shrink: 0;
-      border: 1px solid rgba(30,144,255,0.1);
+      border: 1px solid rgba(27,142,240,0.15);
     }
     .tear-dots {
       flex: 1;
-      border-top: 2px dashed rgba(30,144,255,0.2);
+      border-top: 2px dashed rgba(27,142,240,0.2);
       margin: 0 4px;
     }
 
     .pass-footer {
-      background: rgba(255,212,59,0.05);
+      background: rgba(255,215,0,0.1);
+      border-top: 1px solid rgba(255,215,0,0.3);
       padding: 20px 32px;
       display: flex;
       align-items: center;
@@ -331,10 +354,10 @@
       color: var(--muted);
       line-height: 1.8;
     }
-    .pass-footer .reminder strong { color: var(--gold); }
+    .pass-footer .reminder strong { color: var(--blue-dark); }
     .print-btn {
-      background: var(--sky);
-      color: white;
+      background: var(--yellow);
+      color: var(--blue-dark);
       border: none;
       padding: 10px 20px;
       border-radius: 8px;
@@ -344,7 +367,7 @@
       font-family: 'Barlow', sans-serif;
       transition: background 0.2s;
     }
-    .print-btn:hover { background: #1a7de0; }
+    .print-btn:hover { background: var(--yellow-dark); }
 
     .error-state {
       text-align: center;
@@ -352,7 +375,7 @@
       color: var(--muted);
     }
     .error-state .err-icon { font-size: 48px; margin-bottom: 16px; }
-    .error-state h2 { color: var(--white); margin-bottom: 8px; }
+    .error-state h2 { color: var(--text); margin-bottom: 8px; }
 
     .loading-state {
       text-align: center;
@@ -361,8 +384,8 @@
     }
     .loading-state .spinner {
       width: 40px; height: 40px;
-      border: 3px solid rgba(30,144,255,0.2);
-      border-top-color: var(--sky);
+      border: 3px solid rgba(27,142,240,0.2);
+      border-top-color: var(--blue);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
       margin: 0 auto 16px;
@@ -379,6 +402,7 @@
     }
 
     @media (max-width: 500px) {
+      .page-header { padding: 24px 20px 32px; }
       .details-section { grid-template-columns: repeat(2, 1fr); }
       .route-city .city-code { font-size: 32px; }
       .route-arrow .arrow-line { width: 50px; }
@@ -392,13 +416,9 @@
 
     @media print {
       body { background: white; padding: 0; }
+      .page-header { background: var(--yellow); }
       .boarding-pass { box-shadow: none; border: 1px solid #ddd; }
       .print-btn { display: none; }
-      .page-header { color: #333; }
-      :root {
-        --bg: white; --card: white; --white: #111;
-        --sky-dark: #1A3A5C; --muted: #666; --border: #ddd;
-      }
     }
   </style>
 </head>
@@ -581,7 +601,7 @@
         text: qrUrl,
         width: 106,
         height: 106,
-        colorDark: '#1A3A5C',
+        colorDark: '#1565C0',
         colorLight: '#FFFFFF',
         correctLevel: QRCode.CorrectLevel.M
       });
