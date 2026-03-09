@@ -7,19 +7,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --yellow: #FFD700;
-      --yellow-dark: #F5C200;
-      --blue: #1B8EF0;
-      --blue-dark: #1565C0;
-      --bg: #D6EAF8;
-      --card: #FFFFFF;
-      --border: rgba(27,142,240,0.2);
-      --muted: #5B8DB8;
-      --text: #1A3A5C;
+      --yellow:      #FFD000;
+      --yellow-dark: #E6B800;
+      --blue:        #1565C0;
+      --blue-light:  #1E90FF;
+      --white:       #FFFFFF;
+      --bg:          #F0F4F8;
+      --card:        #FFFFFF;
+      --card-body:   #F7F9FC;
+      --border:      #DDE5EF;
+      --muted:       #7A93AE;
+      --text:        #1A2A3A;
+      --confirmed:   #1B9E4B;
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
       background: var(--bg);
       font-family: 'Barlow', sans-serif;
@@ -28,632 +29,512 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding: 0 0 40px 0;
+      padding: 40px 20px;
+      background-image:
+        radial-gradient(ellipse at 20% 0%,  rgba(255,208,0,0.15)  0%, transparent 55%),
+        radial-gradient(ellipse at 80% 100%, rgba(21,101,192,0.08) 0%, transparent 55%);
     }
 
-    .page-header {
-      width: 100%;
-      background: linear-gradient(135deg, var(--yellow) 0%, var(--yellow-dark) 100%);
-      text-align: center;
-      padding: 32px 20px 40px;
-      margin-bottom: -20px;
-      animation: fadeDown 0.6s ease both;
-      position: relative;
-      overflow: hidden;
-    }
-    .page-header::after {
-      content: '✈';
-      position: absolute;
-      right: 40px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 90px;
-      opacity: 0.1;
-    }
-    .page-header .logo {
-      font-size: 30px;
-      font-weight: 900;
-      color: var(--blue-dark);
-      letter-spacing: -0.5px;
-    }
-    .page-header .logo span { color: var(--blue); }
-    .page-header .subtitle {
-      font-size: 13px;
-      color: rgba(27,101,192,0.7);
-      margin-top: 4px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
+    /* ── PAGE HEADER ── */
+    .page-header { text-align: center; margin-bottom: 36px; animation: fadeDown 0.6s ease both; }
+    .page-header .logo { font-size: 28px; font-weight: 900; color: var(--blue); letter-spacing: -0.5px; }
+    .page-header .logo span { color: var(--yellow-dark); }
+    .page-header .subtitle { font-size: 13px; color: var(--muted); margin-top: 4px; letter-spacing: 2px; text-transform: uppercase; }
 
+    /* ── CARD ── */
     .boarding-pass {
-      width: calc(100% - 40px);
-      max-width: 600px;
+      width: 100%; max-width: 600px;
       background: var(--card);
       border-radius: 20px;
       border: 1px solid var(--border);
       overflow: hidden;
-      box-shadow: 0 10px 40px rgba(27,142,240,0.15), 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 12px 48px rgba(21,101,192,0.12), 0 2px 8px rgba(0,0,0,0.06);
       animation: fadeUp 0.7s ease 0.1s both;
-      position: relative;
-      z-index: 1;
     }
 
+    /* ── YELLOW HEADER ── */
     .pass-header {
-      background: linear-gradient(135deg, var(--yellow) 0%, var(--yellow-dark) 100%);
+      background: linear-gradient(135deg, var(--yellow) 0%, #FFC200 100%);
       padding: 28px 32px 24px;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
     .pass-header::before {
-      content: '✈';
-      position: absolute;
-      right: 24px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 80px;
-      opacity: 0.1;
-      line-height: 1;
+      content: '✈'; position: absolute; right: -10px; top: 50%;
+      transform: translateY(-50%) rotate(0deg);
+      font-size: 120px; opacity: 0.10; line-height: 1; color: #fff;
+      pointer-events: none;
     }
     .pass-header .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(27,142,240,0.15);
-      border: 1px solid rgba(27,142,240,0.4);
-      color: var(--blue-dark);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: 20px;
-      margin-bottom: 16px;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.35); border: 1.5px solid rgba(27,158,75,0.6);
+      color: #116330; font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 16px;
     }
     .pass-header .booking-num {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 22px;
-      color: var(--text);
-      letter-spacing: 2px;
-      margin-bottom: 4px;
+      font-family: 'Share Tech Mono', monospace; font-size: 22px;
+      color: var(--blue); letter-spacing: 2px; margin-bottom: 4px;
     }
     .pass-header .pass-label {
-      font-size: 12px;
-      color: rgba(27,101,192,0.7);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-weight: 600;
+      font-size: 12px; color: rgba(21,101,192,0.7); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
     }
 
+    /* ── ROUTE ── */
     .route-section {
-      padding: 28px 32px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      border-bottom: 1px dashed var(--border);
-      background: #F0F8FF;
+      padding: 28px 32px; display: flex; align-items: center; gap: 16px;
+      border-bottom: 1.5px dashed var(--border); background: var(--card);
     }
-    .route-city {
-      flex: 1;
-      text-align: center;
-    }
-    .route-city .city-code {
-      font-size: 42px;
-      font-weight: 900;
-      color: var(--blue-dark);
-      line-height: 1;
-      letter-spacing: -1px;
-    }
-    .route-city .city-name {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 4px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .route-arrow {
-      flex: 0 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
-    .route-arrow .arrow-line {
-      width: 80px;
-      height: 2px;
-      background: linear-gradient(90deg, var(--border), var(--blue), var(--border));
-      position: relative;
-    }
-    .route-arrow .arrow-line::after {
-      content: '✈';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 18px;
-      color: var(--blue);
-      background: #F0F8FF;
-      padding: 0 6px;
-    }
-    .route-arrow .flight-label {
-      font-size: 10px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+    .route-city { flex: 1; text-align: center; }
+    .route-city .city-code { font-size: 44px; font-weight: 900; color: var(--blue); line-height: 1; letter-spacing: -1px; }
+    .route-city .city-name { font-size: 12px; color: var(--muted); margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+    .route-city .city-airport { font-size: 10px; color: #AABCCE; margin-top: 3px; }
+    .route-arrow { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .route-arrow .arrow-line { display: flex; align-items: center; }
+    .route-arrow .arrow-line .line { width: 70px; height: 2px; background: linear-gradient(90deg, #dde5ef, var(--blue-light)); }
+    .route-arrow .arrow-line .head { width:0; height:0; border-top:6px solid transparent; border-bottom:6px solid transparent; border-left:10px solid var(--blue-light); }
+    .route-arrow .flight-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
 
+    /* ── DETAILS ── */
     .details-section {
-      padding: 24px 32px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      border-bottom: 1px dashed var(--border);
-      background: #FFFFFF;
+      padding: 24px 32px; display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 20px; border-bottom: 1.5px dashed var(--border); background: var(--card-body);
     }
-    .detail-item .di-label {
-      font-size: 10px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      margin-bottom: 4px;
-    }
-    .detail-item .di-value {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .detail-item .di-value.highlight { color: var(--blue); }
+    .detail-item .di-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 4px; font-weight: 600; }
+    .detail-item .di-value { font-size: 15px; font-weight: 700; color: var(--text); }
+    .detail-item .di-value.highlight { color: var(--blue-light); }
 
-    .passenger-section {
-      padding: 24px 32px;
-      border-bottom: 1px dashed var(--border);
-      background: #F0F8FF;
-    }
-    .section-title {
-      font-size: 10px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 16px;
-    }
-    .passenger-name {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
-    .passenger-meta {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-    .pmeta-item {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .pmeta-item .pm-label {
-      font-size: 10px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .pmeta-item .pm-value {
-      font-size: 13px;
-      color: var(--text);
-      font-weight: 600;
-    }
+    /* ── PASSENGERS ── */
+    .passenger-section { padding: 24px 32px; border-bottom: 1.5px dashed var(--border); background: var(--card); }
+    .section-title { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; font-weight: 700; }
 
-    .baggage-section {
-      padding: 20px 32px;
-      border-bottom: 1px dashed var(--border);
-      display: flex;
-      gap: 20px;
-      background: #FFFFFF;
-    }
-    .baggage-item {
-      flex: 1;
-      background: rgba(255,215,0,0.12);
-      border: 1px solid rgba(255,215,0,0.5);
-      border-radius: 10px;
+    .passenger-card {
       padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      background: #F0F6FF;
+      border: 1px solid #D0E3FA;
+      border-radius: 10px;
+      margin-bottom: 10px;
     }
-    .baggage-icon { font-size: 24px; }
-    .baggage-info .bi-label {
-      font-size: 10px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .baggage-info .bi-value {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-    }
+    .passenger-card:last-child { margin-bottom: 0; }
+    .passenger-num { font-size: 10px; color: var(--blue-light); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .passenger-name { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+    .passenger-meta { display: flex; gap: 20px; flex-wrap: wrap; }
+    .pmeta-item { display: flex; flex-direction: column; gap: 2px; }
+    .pmeta-item .pm-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+    .pmeta-item .pm-value { font-size: 13px; color: var(--text); font-weight: 600; }
 
-    .qr-section {
-      padding: 28px 32px;
-      display: flex;
-      align-items: center;
-      gap: 28px;
-      background: #F0F8FF;
+    /* ── BAGGAGE ── */
+    .baggage-section { padding: 20px 32px; border-bottom: 1.5px dashed var(--border); background: var(--card-body); }
+    .baggage-grid { display: flex; flex-direction: column; gap: 14px; }
+    .baggage-pax-block { }
+    .baggage-pax-label { font-size: 10px; color: var(--blue-light); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .baggage-row { display: flex; gap: 10px; }
+    .baggage-item {
+      flex: 1; background: #FFF9E0; border: 1px solid #FFDE66;
+      border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; gap: 10px;
     }
-    .qr-box {
-      flex: 0 0 auto;
-      background: white;
-      border-radius: 12px;
-      padding: 12px;
-      width: 130px;
-      height: 130px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 20px rgba(27,142,240,0.2);
-      border: 2px solid rgba(255,215,0,0.5);
-    }
-    .qr-box img, .qr-box canvas {
-      width: 106px !important;
-      height: 106px !important;
-    }
-    .qr-info { flex: 1; }
-    .qr-info .qi-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-    .qr-info .qi-desc {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-    .qr-info .qi-scan {
-      margin-top: 10px;
-      font-size: 11px;
-      color: var(--blue);
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
+    .baggage-icon { font-size: 22px; }
+    .baggage-info .bi-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+    .baggage-info .bi-value { font-size: 13px; font-weight: 700; color: var(--text); }
 
-    .tear-line {
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      position: relative;
-    }
+    /* ── TEAR LINE ── */
+    .tear-line { display: flex; align-items: center; padding: 0 20px; background: var(--card); }
     .tear-line::before, .tear-line::after {
-      content: '';
-      width: 24px;
-      height: 24px;
-      background: var(--bg);
-      border-radius: 50%;
-      flex-shrink: 0;
-      border: 1px solid rgba(27,142,240,0.15);
+      content: ''; width: 24px; height: 24px; background: var(--bg);
+      border-radius: 50%; flex-shrink: 0; border: 1px solid var(--border);
     }
-    .tear-dots {
-      flex: 1;
-      border-top: 2px dashed rgba(27,142,240,0.2);
-      margin: 0 4px;
-    }
+    .tear-dots { flex: 1; border-top: 2px dashed var(--border); margin: 0 4px; }
 
+    /* ── QR SECTION ── */
+    .qr-section { padding: 28px 32px; display: flex; align-items: center; gap: 28px; background: var(--card); }
+    .qr-box {
+      flex: 0 0 auto; background: white; border-radius: 12px; padding: 12px;
+      width: 130px; height: 130px; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(21,101,192,0.15); border: 1px solid var(--border);
+    }
+    .qr-box img, .qr-box canvas { width: 106px !important; height: 106px !important; }
+    .qr-info { flex: 1; }
+    .qr-info .qi-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .qr-info .qi-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .qr-info .qi-scan { margin-top: 10px; font-size: 11px; color: var(--confirmed); font-weight: 700; letter-spacing: 0.5px; }
+
+    /* ── FOOTER ── */
     .pass-footer {
-      background: rgba(255,215,0,0.1);
-      border-top: 1px solid rgba(255,215,0,0.3);
-      padding: 20px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
+      background: #FFFBE6; border-top: 1px solid #FFE580;
+      padding: 20px 32px; display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 12px;
     }
-    .pass-footer .reminder {
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-    .pass-footer .reminder strong { color: var(--blue-dark); }
+    .pass-footer .reminder { font-size: 11px; color: var(--muted); line-height: 1.8; }
+    .pass-footer .reminder strong { color: #B07D00; }
     .print-btn {
-      background: var(--yellow);
-      color: var(--blue-dark);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: 'Barlow', sans-serif;
-      transition: background 0.2s;
+      background: var(--blue); color: white; border: none;
+      padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 700;
+      cursor: pointer; font-family: 'Barlow', sans-serif; transition: background 0.2s;
     }
-    .print-btn:hover { background: var(--yellow-dark); }
+    .print-btn:hover { background: #0D47A1; }
 
-    .error-state {
-      text-align: center;
-      padding: 60px 32px;
-      color: var(--muted);
-    }
+    /* ── STATES ── */
+    .error-state { text-align: center; padding: 60px 32px; color: var(--muted); }
     .error-state .err-icon { font-size: 48px; margin-bottom: 16px; }
     .error-state h2 { color: var(--text); margin-bottom: 8px; }
-
-    .loading-state {
-      text-align: center;
-      padding: 60px 32px;
-      color: var(--muted);
-    }
+    .loading-state { text-align: center; padding: 60px 32px; color: var(--muted); }
     .loading-state .spinner {
-      width: 40px; height: 40px;
-      border: 3px solid rgba(27,142,240,0.2);
-      border-top-color: var(--blue);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 16px;
+      width: 40px; height: 40px; border: 3px solid #DDE5EF;
+      border-top-color: var(--blue); border-radius: 50%;
+      animation: spin 0.8s linear infinite; margin: 0 auto 16px;
     }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes spin      { to { transform: rotate(360deg); } }
+    @keyframes fadeDown  { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeUp    { from { opacity:0; transform:translateY(30px);  } to { opacity:1; transform:translateY(0); } }
 
     @media (max-width: 500px) {
-      .page-header { padding: 24px 20px 32px; }
-      .details-section { grid-template-columns: repeat(2, 1fr); }
+      .details-section { grid-template-columns: repeat(2,1fr); }
       .route-city .city-code { font-size: 32px; }
-      .route-arrow .arrow-line { width: 50px; }
+      .route-arrow .arrow-line .line { width: 40px; }
       .qr-section { flex-direction: column; text-align: center; }
-      .baggage-section { flex-direction: column; }
-      .pass-header, .route-section, .details-section,
-      .passenger-section, .baggage-section, .qr-section, .pass-footer {
-        padding-left: 20px; padding-right: 20px;
-      }
+      .baggage-row { flex-direction: column; }
+      .pass-header,.route-section,.details-section,.passenger-section,
+      .baggage-section,.qr-section,.pass-footer { padding-left:20px; padding-right:20px; }
     }
-
     @media print {
       body { background: white; padding: 0; }
-      .page-header { background: var(--yellow); }
-      .boarding-pass { box-shadow: none; border: 1px solid #ddd; }
+      .boarding-pass { box-shadow: none; }
       .print-btn { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <div class="page-header">
-    <div class="logo">Sky<span>Ease</span> ✈</div>
-    <div class="subtitle">Boarding Pass</div>
-  </div>
+<div class="page-header">
+  <div class="logo">Sky<span>Ease</span> ✈</div>
+  <div class="subtitle">Boarding Pass</div>
+</div>
 
-  <div class="boarding-pass" id="boardingPass">
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <p>Loading boarding pass...</p>
+<div class="boarding-pass" id="boardingPass">
+  <div class="loading-state"><div class="spinner"></div><p>Loading boarding pass...</p></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+// ── AIRPORT DATABASE ──────────────────────────────────────────────────────────
+const AIRPORTS = {
+  "manila":            { code:"MNL", name:"Manila",            airport:"Ninoy Aquino International Airport",        terminal:"" },
+  "mnl":               { code:"MNL", name:"Manila",            airport:"Ninoy Aquino International Airport",        terminal:"" },
+  "cebu":              { code:"CEB", name:"Cebu",              airport:"Mactan-Cebu International Airport",         terminal:"Terminal 1" },
+  "ceb":               { code:"CEB", name:"Cebu",              airport:"Mactan-Cebu International Airport",         terminal:"Terminal 1" },
+  "davao":             { code:"DVO", name:"Davao",             airport:"Francisco Bangoy International Airport",    terminal:"" },
+  "dvo":               { code:"DVO", name:"Davao",             airport:"Francisco Bangoy International Airport",    terminal:"" },
+  "iloilo":            { code:"ILO", name:"Iloilo",            airport:"Iloilo International Airport",             terminal:"" },
+  "ilo":               { code:"ILO", name:"Iloilo",            airport:"Iloilo International Airport",             terminal:"" },
+  "bacolod":           { code:"BCD", name:"Bacolod",           airport:"Bacolod-Silay International Airport",      terminal:"" },
+  "bcd":               { code:"BCD", name:"Bacolod",           airport:"Bacolod-Silay International Airport",      terminal:"" },
+  "zamboanga":         { code:"ZAM", name:"Zamboanga",         airport:"Zamboanga International Airport",          terminal:"" },
+  "zam":               { code:"ZAM", name:"Zamboanga",         airport:"Zamboanga International Airport",          terminal:"" },
+  "cagayan de oro":    { code:"CGY", name:"Cagayan de Oro",    airport:"Laguindingan Airport",                     terminal:"" },
+  "cgy":               { code:"CGY", name:"Cagayan de Oro",    airport:"Laguindingan Airport",                     terminal:"" },
+  "general santos":    { code:"GES", name:"General Santos",    airport:"General Santos International Airport",     terminal:"" },
+  "ges":               { code:"GES", name:"General Santos",    airport:"General Santos International Airport",     terminal:"" },
+  "tacloban":          { code:"TAC", name:"Tacloban",          airport:"Daniel Z. Romualdez Airport",              terminal:"" },
+  "tac":               { code:"TAC", name:"Tacloban",          airport:"Daniel Z. Romualdez Airport",              terminal:"" },
+  "puerto princesa":   { code:"PPS", name:"Puerto Princesa",   airport:"Puerto Princesa International Airport",    terminal:"" },
+  "pps":               { code:"PPS", name:"Puerto Princesa",   airport:"Puerto Princesa International Airport",    terminal:"" },
+  "kalibo":            { code:"KLO", name:"Kalibo",            airport:"Kalibo International Airport",             terminal:"" },
+  "klo":               { code:"KLO", name:"Kalibo",            airport:"Kalibo International Airport",             terminal:"" },
+  "caticlan":          { code:"MPH", name:"Boracay/Caticlan",  airport:"Godofredo P. Ramos Airport (Caticlan)",   terminal:"" },
+  "boracay":           { code:"MPH", name:"Boracay/Caticlan",  airport:"Godofredo P. Ramos Airport (Caticlan)",   terminal:"" },
+  "mph":               { code:"MPH", name:"Boracay",           airport:"Godofredo P. Ramos Airport",              terminal:"" },
+  "legazpi":           { code:"LGP", name:"Legazpi",           airport:"Legazpi Airport",                         terminal:"" },
+  "lgp":               { code:"LGP", name:"Legazpi",           airport:"Legazpi Airport",                         terminal:"" },
+  "bicol":             { code:"LGP", name:"Bicol",             airport:"Legazpi Airport",                         terminal:"" },
+  "bic":               { code:"LGP", name:"Bicol",             airport:"Legazpi Airport",                         terminal:"" },
+  "cotabato":          { code:"CBO", name:"Cotabato",          airport:"Awang Airport",                           terminal:"" },
+  "cbo":               { code:"CBO", name:"Cotabato",          airport:"Awang Airport",                           terminal:"" },
+  "dumaguete":         { code:"DGT", name:"Dumaguete",         airport:"Sibulan Airport",                         terminal:"" },
+  "dgt":               { code:"DGT", name:"Dumaguete",         airport:"Sibulan Airport",                         terminal:"" },
+  "ozamiz":            { code:"OZC", name:"Ozamiz",            airport:"Labo Airport",                            terminal:"" },
+  "ozc":               { code:"OZC", name:"Ozamiz",            airport:"Labo Airport",                            terminal:"" },
+  "pagadian":          { code:"PAG", name:"Pagadian",          airport:"Pagadian Airport",                        terminal:"" },
+  "pag":               { code:"PAG", name:"Pagadian",          airport:"Pagadian Airport",                        terminal:"" },
+  "virac":             { code:"VRC", name:"Virac",             airport:"Virac Airport",                           terminal:"" },
+  "vrc":               { code:"VRC", name:"Virac",             airport:"Virac Airport",                           terminal:"" },
+  "naga":              { code:"WNP", name:"Naga",              airport:"Naga Airport",                            terminal:"" },
+  "wnp":               { code:"WNP", name:"Naga",              airport:"Naga Airport",                            terminal:"" },
+  "tuguegarao":        { code:"TUG", name:"Tuguegarao",        airport:"Tuguegarao Airport",                      terminal:"" },
+  "tug":               { code:"TUG", name:"Tuguegarao",        airport:"Tuguegarao Airport",                      terminal:"" },
+  "laoag":             { code:"LAO", name:"Laoag",             airport:"Laoag International Airport",             terminal:"" },
+  "lao":               { code:"LAO", name:"Laoag",             airport:"Laoag International Airport",             terminal:"" },
+  "baguio":            { code:"BAG", name:"Baguio",            airport:"Loakan Airport",                          terminal:"" },
+  "bag":               { code:"BAG", name:"Baguio",            airport:"Loakan Airport",                          terminal:"" },
+  "clark":             { code:"CRK", name:"Clark",             airport:"Clark International Airport",             terminal:"" },
+  "crk":               { code:"CRK", name:"Clark",             airport:"Clark International Airport",             terminal:"" },
+  "angeles":           { code:"CRK", name:"Clark/Angeles",     airport:"Clark International Airport",             terminal:"" },
+  "san jose":          { code:"SJI", name:"San Jose",          airport:"San Jose Airport",                        terminal:"" },
+  "sji":               { code:"SJI", name:"San Jose",          airport:"San Jose Airport",                        terminal:"" },
+  "roxas":             { code:"RXS", name:"Roxas",             airport:"Roxas Airport",                           terminal:"" },
+  "rxs":               { code:"RXS", name:"Roxas",             airport:"Roxas Airport",                           terminal:"" },
+  // International
+  "singapore":         { code:"SIN", name:"Singapore",         airport:"Changi Airport",                          terminal:"" },
+  "sin":               { code:"SIN", name:"Singapore",         airport:"Changi Airport",                          terminal:"" },
+  "hong kong":         { code:"HKG", name:"Hong Kong",         airport:"Hong Kong International Airport",         terminal:"" },
+  "hkg":               { code:"HKG", name:"Hong Kong",         airport:"Hong Kong International Airport",         terminal:"" },
+  "tokyo":             { code:"NRT", name:"Tokyo",             airport:"Narita International Airport",            terminal:"" },
+  "nrt":               { code:"NRT", name:"Tokyo",             airport:"Narita International Airport",            terminal:"" },
+  "osaka":             { code:"KIX", name:"Osaka",             airport:"Kansai International Airport",            terminal:"" },
+  "kix":               { code:"KIX", name:"Osaka",             airport:"Kansai International Airport",            terminal:"" },
+  "seoul":             { code:"ICN", name:"Seoul",             airport:"Incheon International Airport",           terminal:"" },
+  "icn":               { code:"ICN", name:"Seoul",             airport:"Incheon International Airport",           terminal:"" },
+  "taipei":            { code:"TPE", name:"Taipei",            airport:"Taiwan Taoyuan International Airport",    terminal:"" },
+  "tpe":               { code:"TPE", name:"Taipei",            airport:"Taiwan Taoyuan International Airport",    terminal:"" },
+  "kuala lumpur":      { code:"KUL", name:"Kuala Lumpur",      airport:"Kuala Lumpur International Airport",      terminal:"" },
+  "kul":               { code:"KUL", name:"Kuala Lumpur",      airport:"Kuala Lumpur International Airport",      terminal:"" },
+  "bangkok":           { code:"BKK", name:"Bangkok",           airport:"Suvarnabhumi Airport",                    terminal:"" },
+  "bkk":               { code:"BKK", name:"Bangkok",           airport:"Suvarnabhumi Airport",                    terminal:"" },
+  "dubai":             { code:"DXB", name:"Dubai",             airport:"Dubai International Airport",             terminal:"" },
+  "dxb":               { code:"DXB", name:"Dubai",             airport:"Dubai International Airport",             terminal:"" },
+  "london":            { code:"LHR", name:"London",            airport:"Heathrow Airport",                        terminal:"" },
+  "lhr":               { code:"LHR", name:"London",            airport:"Heathrow Airport",                        terminal:"" },
+  "new york":          { code:"JFK", name:"New York",          airport:"John F. Kennedy International Airport",   terminal:"" },
+  "jfk":               { code:"JFK", name:"New York",          airport:"John F. Kennedy International Airport",   terminal:"" },
+  "los angeles":       { code:"LAX", name:"Los Angeles",       airport:"Los Angeles International Airport",       terminal:"" },
+  "lax":               { code:"LAX", name:"Los Angeles",       airport:"Los Angeles International Airport",       terminal:"" },
+  "sydney":            { code:"SYD", name:"Sydney",            airport:"Kingsford Smith Airport",                 terminal:"" },
+  "syd":               { code:"SYD", name:"Sydney",            airport:"Kingsford Smith Airport",                 terminal:"" },
+  "jakarta":           { code:"CGK", name:"Jakarta",           airport:"Soekarno-Hatta International Airport",    terminal:"" },
+  "cgk":               { code:"CGK", name:"Jakarta",           airport:"Soekarno-Hatta International Airport",    terminal:"" },
+  "doha":              { code:"DOH", name:"Doha",              airport:"Hamad International Airport",             terminal:"" },
+  "doh":               { code:"DOH", name:"Doha",              airport:"Hamad International Airport",             terminal:"" },
+  "paris":             { code:"CDG", name:"Paris",             airport:"Charles de Gaulle Airport",               terminal:"" },
+  "cdg":               { code:"CDG", name:"Paris",             airport:"Charles de Gaulle Airport",               terminal:"" },
+  "amsterdam":         { code:"AMS", name:"Amsterdam",         airport:"Amsterdam Airport Schiphol",              terminal:"" },
+  "ams":               { code:"AMS", name:"Amsterdam",         airport:"Amsterdam Airport Schiphol",              terminal:"" },
+  "frankfurt":         { code:"FRA", name:"Frankfurt",         airport:"Frankfurt Airport",                       terminal:"" },
+  "fra":               { code:"FRA", name:"Frankfurt",         airport:"Frankfurt Airport",                       terminal:"" },
+};
+
+function resolveAirport(input) {
+  const key = (input||'').toLowerCase().trim();
+  if (AIRPORTS[key]) return AIRPORTS[key];
+  for (const [k,v] of Object.entries(AIRPORTS)) {
+    if (key.includes(k) || k.includes(key)) return v;
+  }
+  const code = key.substring(0,3).toUpperCase();
+  const display = input.charAt(0).toUpperCase()+input.slice(1);
+  return { code, name:display, airport:display+" Airport", terminal:"" };
+}
+
+function getParams() {
+  const p = new URLSearchParams(window.location.search);
+  const r = {};
+  for (const [k,v] of p.entries()) r[k]=v;
+  return r;
+}
+
+function parsePassengers(p) {
+  const list = [];
+  for (let i=1; i<=20; i++) {
+    const suf = i===1?'':String(i);
+    const name = p['name'+suf];
+    if (!name && i>1) break;
+    if (!name) continue;
+    list.push({ name, gender:p['gender'+suf]||'N/A', dob:p['dob'+suf]||'N/A', meal:p['meal'+suf]||'Standard', seat:p['seat'+suf]||'N/A' });
+  }
+  if (list.length===0 && p.names) {
+    p.names.split(',').forEach((n,i)=>{
+      list.push({ name:n.trim(), gender:(p.genders||'').split(',')[i]?.trim()||'N/A', dob:(p.dobs||'').split(',')[i]?.trim()||'N/A', meal:(p.meals||'').split(',')[i]?.trim()||'Standard', seat:(p.seats||'').split(',')[i]?.trim()||'N/A' });
+    });
+  }
+  if (list.length===0) {
+    const pax = parseInt(p.pax||p.passengers||1);
+    for (let j=0;j<pax;j++) list.push({ name:'Passenger '+(j+1), gender:'N/A', dob:'N/A', meal:'Standard', seat:'N/A' });
+  }
+  return list;
+}
+
+function getBaggage(cls) {
+  const m = { economy:{cabin:'7 kg',checked:'20 kg'}, business:{cabin:'10 kg',checked:'30 kg'}, first:{cabin:'15 kg',checked:'40 kg'} };
+  return m[(cls||'economy').toLowerCase()]||m.economy;
+}
+function cap(s){ return s?s.charAt(0).toUpperCase()+s.slice(1).toLowerCase():''; }
+
+// ── LOAD ──────────────────────────────────────────────────────────────────────
+function loadBoardingPass() {
+  const p = getParams();
+  if (!p.from && !p.booking) {
+    renderPass({
+      booking:'Z2 773', fromInfo:resolveAirport('manila'), toInfo:resolveAirport('cebu'),
+      date:'Tue, May 26 2026', time:'22:05', arrival:'23:30', cls:'economy', airline:'AirAsia',
+      passengers:[
+        { name:'Noel Tagra',           gender:'Male', dob:'N/A', meal:'Standard', seat:'N/A' },
+        { name:'Albert Condrar Tagra', gender:'Male', dob:'N/A', meal:'Standard', seat:'N/A' },
+      ],
+      baggagePerPax:{ cabin:'7 kg', checked:null },
+    });
+    return;
+  }
+  if (p.from) {
+    const cls = (p.class||'economy').toLowerCase();
+    renderPass({
+      booking:p.booking||'SKY-BOARDING',
+      fromInfo:resolveAirport(p.from), toInfo:resolveAirport(p.to||''),
+      date:p.date||'N/A', time:p.time||'N/A', arrival:p.arrival||'N/A',
+      cls, airline:p.airline||'SkyEase',
+      passengers:parsePassengers(p), baggagePerPax:getBaggage(cls),
+    });
+  } else { fetchFromBackend(p.booking); }
+}
+
+function renderPass({ booking, fromInfo, toInfo, date, time, arrival, cls, airline, passengers, baggagePerPax }) {
+  const fT = fromInfo.terminal?' · '+fromInfo.terminal:'';
+  const tT = toInfo.terminal  ?' · '+toInfo.terminal  :'';
+
+  const passengerCards = passengers.map((pax,i)=>`
+    <div class="passenger-card">
+      <div class="passenger-num">Passenger ${i+1}</div>
+      <div class="passenger-name">${pax.name}</div>
+      <div class="passenger-meta">
+        <div class="pmeta-item"><span class="pm-label">Gender</span><span class="pm-value">${cap(pax.gender)}</span></div>
+        <div class="pmeta-item"><span class="pm-label">Date of Birth</span><span class="pm-value">${pax.dob}</span></div>
+        <div class="pmeta-item"><span class="pm-label">Meal</span><span class="pm-value">${cap(pax.meal)||'Standard'}</span></div>
+        ${pax.seat!=='N/A'?`<div class="pmeta-item"><span class="pm-label">Seat</span><span class="pm-value" style="color:var(--blue-light)">${pax.seat}</span></div>`:''}
+      </div>
+    </div>`).join('');
+
+  const baggageBlocks = passengers.map(pax=>`
+    <div class="baggage-pax-block">
+      <div class="baggage-pax-label">${pax.name}</div>
+      <div class="baggage-row">
+        <div class="baggage-item">
+          <div class="baggage-icon">🎒</div>
+          <div class="baggage-info">
+            <div class="bi-label">Cabin Baggage</div>
+            <div class="bi-value">${baggagePerPax.cabin} (Included)</div>
+          </div>
+        </div>
+        ${baggagePerPax.checked?`
+        <div class="baggage-item">
+          <div class="baggage-icon">🧳</div>
+          <div class="baggage-info">
+            <div class="bi-label">Checked Baggage</div>
+            <div class="bi-value">${baggagePerPax.checked}</div>
+          </div>
+        </div>`:''}
+      </div>
+    </div>`).join('');
+
+  const paxNames = passengers.map(p=>p.name).join(', ');
+
+  document.getElementById('boardingPass').innerHTML = `
+    <div class="pass-header">
+      <div class="status-badge">✅ CONFIRMED</div>
+      <div class="booking-num">${booking}</div>
+      <div class="pass-label">Booking Reference</div>
     </div>
-  </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <script>
-    // ============================================================
-    // BOARDING PASS — reads flight data from URL params
-    // Works WITHOUT backend. QR encodes all flight info.
-    // ============================================================
+    <div class="route-section">
+      <div class="route-city">
+        <div class="city-code">${fromInfo.code}</div>
+        <div class="city-name">${fromInfo.name}</div>
+        <div class="city-airport">${fromInfo.airport}${fT}</div>
+      </div>
+      <div class="route-arrow">
+        <div class="arrow-line"><div class="line"></div><div class="head"></div></div>
+        <div class="flight-label">${airline}</div>
+      </div>
+      <div class="route-city">
+        <div class="city-code">${toInfo.code}</div>
+        <div class="city-name">${toInfo.name}</div>
+        <div class="city-airport">${toInfo.airport}${tT}</div>
+      </div>
+    </div>
 
-    function getParams() {
-      const p = new URLSearchParams(window.location.search);
-      const result = {};
-      for (const [k, v] of p.entries()) result[k] = v;
-      return result;
-    }
+    <div class="details-section">
+      <div class="detail-item"><div class="di-label">Date</div><div class="di-value">${date}</div></div>
+      <div class="detail-item"><div class="di-label">Departure</div><div class="di-value highlight">${time}</div></div>
+      <div class="detail-item"><div class="di-label">Class</div><div class="di-value">${cls.toUpperCase()}</div></div>
+      <div class="detail-item"><div class="di-label">Arrival</div><div class="di-value highlight">${arrival}</div></div>
+      <div class="detail-item"><div class="di-label">Airline</div><div class="di-value">${airline}</div></div>
+      <div class="detail-item"><div class="di-label">Passengers</div><div class="di-value">${passengers.length} pax</div></div>
+    </div>
 
-    function loadBoardingPass() {
-      const p = getParams();
+    <div class="passenger-section">
+      <div class="section-title">Passenger Information</div>
+      ${passengerCards}
+    </div>
 
-      // Support two modes:
-      // 1. Legacy backend mode: ?booking=BK-XXX-P1
-      // 2. New standalone mode: ?from=Manila&to=Cebu&...
-      if (!p.from && !p.booking) {
-        showError('No flight data found.', 'Please scan a valid SkyEase boarding pass QR code.');
-        return;
-      }
+    <div class="baggage-section">
+      <div class="section-title">Baggage Allowance</div>
+      <div class="baggage-grid">${baggageBlocks}</div>
+    </div>
 
-      if (p.from) {
-        // Standalone mode — data is in URL params
-        renderFromParams(p);
-      } else {
-        // Legacy mode — try backend, fallback to error
-        fetchFromBackend(p.booking);
-      }
-    }
+    <div class="tear-line"><div class="tear-dots"></div></div>
 
-    function renderFromParams(p) {
-      const baggageMap = {
-        economy:  { cabin: '7 kg', checked: '20 kg' },
-        business: { cabin: '10 kg', checked: '30 kg' },
-        first:    { cabin: '15 kg', checked: '40 kg' }
-      };
-      const cls     = (p.class || 'economy').toLowerCase();
-      const baggage = baggageMap[cls] || baggageMap.economy;
-
-      const statusColor = '#22C55E';
-      const statusLabel = '✅ Confirmed';
-
-      const fromCode = (p.from || '---').substring(0, 3).toUpperCase();
-      const toCode   = (p.to   || '---').substring(0, 3).toUpperCase();
-
-      document.getElementById('boardingPass').innerHTML = `
-        <div class="pass-header">
-          <div class="status-badge" style="border-color:#22C55E44;color:#22C55E;background:#22C55E18;">
-            ${statusLabel}
-          </div>
-          <div class="booking-num">${p.booking || 'SKY-BOARDING'}</div>
-          <div class="pass-label">Booking Reference</div>
+    <div class="qr-section">
+      <div class="qr-box" id="qrContainer"></div>
+      <div class="qr-info">
+        <div class="qi-title">📱 Boarding Pass QR</div>
+        <div class="qi-desc">
+          Present this QR at the check-in counter and boarding gate.<br>
+          <strong style="color:#1A2A3A">${fromInfo.airport}${fT} → ${toInfo.airport}${tT}</strong>
         </div>
+        <div class="qi-scan">✅ Scan to verify all flight details</div>
+      </div>
+    </div>
 
-        <div class="route-section">
-          <div class="route-city">
-            <div class="city-code">${fromCode}</div>
-            <div class="city-name">${p.from || 'Origin'}</div>
-          </div>
-          <div class="route-arrow">
-            <div class="arrow-line"></div>
-            <div class="flight-label">${p.airline || 'SkyEase'}</div>
-          </div>
-          <div class="route-city">
-            <div class="city-code">${toCode}</div>
-            <div class="city-name">${p.to || 'Destination'}</div>
-          </div>
-        </div>
+    <div class="pass-footer">
+      <div class="reminder">
+        <strong>⏰ Check-in:</strong> At least 2 hours before departure<br>
+        <strong>🪪 Bring:</strong> Valid government-issued ID<br>
+        <strong>📞 Support:</strong> skyease.airline@gmail.com
+      </div>
+      <button class="print-btn" onclick="window.print()">🖨️ Print Pass</button>
+    </div>
+  `;
 
-        <div class="details-section">
-          <div class="detail-item">
-            <div class="di-label">Date</div>
-            <div class="di-value">${p.date || 'N/A'}</div>
-          </div>
-          <div class="detail-item">
-            <div class="di-label">Departure</div>
-            <div class="di-value highlight">${p.time || 'N/A'}</div>
-          </div>
-          <div class="detail-item">
-            <div class="di-label">Class</div>
-            <div class="di-value">${cls.toUpperCase()}</div>
-          </div>
-          <div class="detail-item">
-            <div class="di-label">Seat</div>
-            <div class="di-value highlight">${p.seat || 'N/A'}</div>
-          </div>
-          <div class="detail-item">
-            <div class="di-label">Airline</div>
-            <div class="di-value">${p.airline || 'N/A'}</div>
-          </div>
-          <div class="detail-item">
-            <div class="di-label">Passengers</div>
-            <div class="di-value">${p.pax || 1} pax</div>
-          </div>
-        </div>
+  const qrData = [
+    "SkyEase Boarding Pass",
+    `Flight: ${airline} · ${booking}`,
+    `Route: ${fromInfo.name} (${fromInfo.code}) → ${toInfo.name} (${toInfo.code})`,
+    `Date: ${date} | Dep: ${time} | Arr: ${arrival}`,
+    `Class: ${cls.toUpperCase()} | ${passengers.length} Passenger(s)`,
+    `Passengers: ${paxNames}`,
+    `Cabin: ${baggagePerPax.cabin} per pax`,
+    `From: ${fromInfo.airport}${fT}`,
+    `To: ${toInfo.airport}${tT}`,
+  ].join('\n');
 
-        <div class="passenger-section">
-          <div class="section-title">Passenger Information</div>
-          <div class="passenger-name">${p.name || 'Passenger'}</div>
-          <div class="passenger-meta">
-            <div class="pmeta-item">
-              <span class="pm-label">Gender</span>
-              <span class="pm-value">${p.gender ? p.gender.charAt(0).toUpperCase() + p.gender.slice(1) : 'N/A'}</span>
-            </div>
-            <div class="pmeta-item">
-              <span class="pm-label">Date of Birth</span>
-              <span class="pm-value">${p.dob || 'N/A'}</span>
-            </div>
-            <div class="pmeta-item">
-              <span class="pm-label">Meal</span>
-              <span class="pm-value">${p.meal ? p.meal.charAt(0).toUpperCase() + p.meal.slice(1) : 'Standard'}</span>
-            </div>
-          </div>
-        </div>
+  new QRCode(document.getElementById('qrContainer'),{
+    text:qrData, width:106, height:106,
+    colorDark:'#1565C0', colorLight:'#FFFFFF', correctLevel:QRCode.CorrectLevel.M
+  });
+}
 
-        <div class="baggage-section">
-          <div class="baggage-item">
-            <div class="baggage-icon">🎒</div>
-            <div class="baggage-info">
-              <div class="bi-label">Cabin Baggage</div>
-              <div class="bi-value">${baggage.cabin}</div>
-            </div>
-          </div>
-          <div class="baggage-item">
-            <div class="baggage-icon">🧳</div>
-            <div class="baggage-info">
-              <div class="bi-label">Checked Baggage</div>
-              <div class="bi-value">${baggage.checked}</div>
-            </div>
-          </div>
-        </div>
+async function fetchFromBackend(bookingParam) {
+  const BACKEND_URL = 'http://localhost:3000';
+  const bookingNumber = bookingParam.replace(/-P\d+$/,'');
+  try {
+    const res  = await fetch(`${BACKEND_URL}/api/bookings/${bookingNumber}`);
+    const data = await res.json();
+    if (!data.success||!data.booking){ showError('Booking not found.','This QR code may be invalid or expired.'); return; }
+    const b=data.booking, f=b.flightDetails;
+    const passengers = b.passengers.map(pax=>({
+      name:[pax.firstName,pax.middleName||'',pax.lastName].filter(Boolean).join(' '),
+      gender:pax.gender, dob:pax.dateOfBirth||pax.dob||'N/A',
+      meal:pax.mealPreference||'Standard', seat:pax.seat||'N/A',
+    }));
+    renderPass({
+      booking:bookingParam, fromInfo:resolveAirport(f.from), toInfo:resolveAirport(f.to),
+      date:f.date, time:f.time, arrival:f.arrival||'N/A',
+      cls:f.seatClass||'economy', airline:f.airline,
+      passengers, baggagePerPax:getBaggage(f.seatClass),
+    });
+  } catch(err){ showError('Cannot connect to server.','Please make sure the backend is running.'); }
+}
 
-        <div class="tear-line"><div class="tear-dots"></div></div>
+function showError(title,desc){
+  document.getElementById('boardingPass').innerHTML=`
+    <div class="error-state"><div class="err-icon">✈️</div><h2>${title}</h2><p>${desc}</p></div>`;
+}
 
-        <div class="qr-section">
-          <div class="qr-box" id="qrContainer"></div>
-          <div class="qr-info">
-            <div class="qi-title">📱 Boarding Pass QR</div>
-            <div class="qi-desc">
-              Present this QR code at the airport check-in counter and boarding gate.
-            </div>
-            <div class="qi-scan">✅ Scan to verify all flight details</div>
-          </div>
-        </div>
-
-        <div class="pass-footer">
-          <div class="reminder">
-            <strong>⏰ Check-in:</strong> At least 2 hours before departure<br>
-            <strong>🪪 Bring:</strong> Valid government-issued ID<br>
-            <strong>📞 Support:</strong> skyease.airline@gmail.com
-          </div>
-          <button class="print-btn" onclick="window.print()">🖨️ Print Pass</button>
-        </div>
-      `;
-
-      // Generate QR that encodes THIS page's URL (with all data in params)
-      const qrUrl = window.location.href;
-      new QRCode(document.getElementById('qrContainer'), {
-        text: qrUrl,
-        width: 106,
-        height: 106,
-        colorDark: '#1565C0',
-        colorLight: '#FFFFFF',
-        correctLevel: QRCode.CorrectLevel.M
-      });
-    }
-
-    async function fetchFromBackend(bookingParam) {
-      const BACKEND_URL = 'http://localhost:3000';
-      const bookingNumber = bookingParam.replace(/-P\d+$/, '');
-      const passengerIndex = parseInt((bookingParam.match(/-P(\d+)$/) || [,1])[1]) - 1;
-
-      try {
-        const res  = await fetch(`${BACKEND_URL}/api/bookings/${bookingNumber}`);
-        const data = await res.json();
-        if (!data.success || !data.booking) {
-          showError('Booking not found.', 'This QR code may be invalid or expired.');
-          return;
-        }
-        const booking   = data.booking;
-        const flight    = booking.flightDetails;
-        const passenger = booking.passengers[passengerIndex] || booking.passengers[0];
-        const p = {
-          booking: bookingParam,
-          from:    flight.from,
-          to:      flight.to,
-          date:    flight.date,
-          time:    flight.time,
-          class:   flight.seatClass,
-          seat:    passenger.seat,
-          airline: flight.airline,
-          pax:     flight.totalPassengers || 1,
-          name:    `${passenger.firstName} ${passenger.middleName || ''} ${passenger.lastName}`.trim(),
-          gender:  passenger.gender,
-          dob:     passenger.dateOfBirth || passenger.dob,
-          meal:    passenger.mealPreference
-        };
-        renderFromParams(p);
-      } catch (err) {
-        showError('Cannot connect to server.', 'Please make sure the backend is running.');
-      }
-    }
-
-    function showError(title, desc) {
-      document.getElementById('boardingPass').innerHTML = `
-        <div class="error-state">
-          <div class="err-icon">✈️</div>
-          <h2>${title}</h2>
-          <p>${desc}</p>
-        </div>
-      `;
-    }
-
-    loadBoardingPass();
-  </script>
+loadBoardingPass();
+</script>
 </body>
 </html>
